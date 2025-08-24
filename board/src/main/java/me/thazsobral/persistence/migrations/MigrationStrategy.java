@@ -1,4 +1,4 @@
-package me.thazsobral.manager_to_do.persistence.migrations;
+package me.thazsobral.persistence.migrations;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -8,19 +8,18 @@ import java.sql.SQLException;
 
 import liquibase.Liquibase;
 import liquibase.database.jvm.JdbcConnection;
-import liquibase.exception.DatabaseException;
 import liquibase.exception.LiquibaseException;
 import liquibase.resource.ClassLoaderResourceAccessor;
 import lombok.AllArgsConstructor;
 
-import static me.thazsobral.manager_to_do.persistence.configs.ConnectionConfig.getConnection;
+import static me.thazsobral.persistence.configs.ConnectionConfig.getConnection;
 
 @AllArgsConstructor
 public class MigrationStrategy {
 
     private final Connection connection;
 
-    private void executeMigration() {
+    public void executeMigration() {
         var originalOut = System.out;
         var originalErr = System.err;
 
@@ -34,9 +33,9 @@ public class MigrationStrategy {
                 var jdbcConnection = new JdbcConnection(connection);
             ) {
                 
-                var liquibase = new Liquibase("/db/changelog/db.changelog-master.yml", new ClassLoaderResourceAccessor(), jdbcConnection);
-
-                liquibase.update();
+                try (var liquibase = new Liquibase("/db/changelog/db.changelog-master.yml", new ClassLoaderResourceAccessor(), jdbcConnection)) {
+                    liquibase.update();
+                }
             } catch (SQLException | LiquibaseException e) {
                 e.printStackTrace();
             }

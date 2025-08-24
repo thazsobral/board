@@ -1,4 +1,4 @@
-package me.thazsobral.manager_to_do.persistence.configs;
+package me.thazsobral.persistence.configs;
 
 import lombok.NoArgsConstructor;
 
@@ -12,7 +12,7 @@ import java.sql.SQLException;
 public class ConnectionConfig {
 
     public static Connection getConnection() throws SQLException {
-        var url = "jdbc:mysql://localhost/board";
+        var url = "jdbc:mysql://localhost:3306/board";
         var user = "board";
         var password = "board";
 
