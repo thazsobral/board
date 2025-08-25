@@ -2,9 +2,9 @@
 --changeset junior:202508241232
 --comment: boards table create
 
-create table BOARDS(
-    id bigint auto_increment primary key,
-    name varchar(255) not null
-) engine=InnoDB;
+CREATE TABLE BOARDS(
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255) NOT NULL
+) ENGINE=InnoDB;
 
 --rollback DROP TABLE BOARDS
